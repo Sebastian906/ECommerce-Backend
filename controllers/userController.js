@@ -32,6 +32,10 @@ const loginUser = async (req,res) => {
 const registerUser = async (req,res) => {
     try {
         const { name, email, password } = req.body;
+        //verificar que los datos no estén vacios
+        if (!email || !name || !password) {
+            return res.json({success: false, message: "Todos los campos son obligatorios"});
+        }
         // revisar si el usuario ya existe
         const exists = await userModel.findOne({email});
         if (exists) {
@@ -51,7 +55,7 @@ const registerUser = async (req,res) => {
             name,
             email,
             password: hashedPassword
-        })
+        });
         const user = await newUser.save()
         const token = createToken(user._id)
         res.json({success: true, token})
