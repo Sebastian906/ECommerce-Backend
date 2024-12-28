@@ -16,6 +16,10 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+        // verifying email is present
+        if (!email || email.trim() === "") {
+            return res.json({success: false, message: "El correo es obligatorio" });
+        }
         // checking user already exists or not
         const exists = await userModel.findOne({email});
         if (exists) {
