@@ -23,7 +23,8 @@ const loginUser = async (req, res) => {
             res.json({success:false,message:'Credenciales invalidas'})
         }
     } catch (error) {
-
+        console.log(error);
+        res.json({success: false, message: error.message})
     }
 }
 
